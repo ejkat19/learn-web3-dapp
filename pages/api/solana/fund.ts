@@ -10,9 +10,11 @@ export default async function fund(
     const {network, address} = req.body;
     const url = getNodeURL(network);
     const connection = new Connection(url, 'confirmed');
-    const publicKey = undefined;
-    const hash = undefined;
-    await undefined;
+    const publicKey = new PublicKey(
+      'D15HuM5jE2EdqAwSAT5SZ1VcbcJcVF7JC7ZHFSSKN4k4',
+    );
+    const hash = await connection.requestAirdrop(publicKey, LAMPORTS_PER_SOL);
+    await connection.confirmTransaction(hash);
     res.status(200).json(hash);
   } catch (error) {
     let errorMessage = error instanceof Error ? error.message : 'Unknown Error';
